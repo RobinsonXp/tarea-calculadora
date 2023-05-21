@@ -25,7 +25,7 @@ botonBorrar.addEventListener('click', () => {
 });
 
 function agregarNumero(numero) {
-  
+
   if (operador === "") {
     if (numero === '.' && valorActual.includes('.')) return;
     valorActual = valorActual.toString() + numero.toString();
@@ -46,40 +46,71 @@ function imprimirValores() {
 }
 
 function agregarOperador(accion) {
-  let variable = accion.toString().toUpperCase();
+  if (operador === "") {
+    if (valorActual === "") return;
+    let variable = accion.toString().toUpperCase();
 
-  if (valorActual==="") return;
-  //if (valorActual==="" && variable!=="RESTAR") return;
+    switch (variable) {
+      case "SUMAR":
+        operador = "+";
+        break;
+      case "RESTAR":
+        operador = "-";
+        break;
+      case "MULTIPLICAR":
+        operador = "*";
+        break;
+      default:
+        operador = "/";
+        break;
+    }
 
-  //if (valorActual!=="" && valorAnterior!=="") return;
+    //if (valorActual==="" && variable!=="RESTAR") return;
 
-  if(variable==="SUMAR"){
-    operador = "+";
-  } else if(variable==="RESTAR"){
-    operador = "-";
-  } else if(variable==="MULTIPLICAR"){
-    operador = "*";
-  } else {
-    operador = "/";
+    //if (valorActual!=="" && valorAnterior!=="") return;
+    /*
+    if (variable === "SUMAR") {
+      operador = "+";
+    } else if (variable === "RESTAR") {
+      operador = "-";
+    } else if (variable === "MULTIPLICAR") {
+      operador = "*";
+    } else {
+      operador = "/";
+    }*/
+
+    imprimirValores();
   }
-  
-  imprimirValores();
-  console.log(operador);
 }
 
-function operacion(){
-  if (operador=="" ||valorActual==="" || valorAnterior==="") return;
+function operacion() {
+  if (operador == "" || valorActual === "" || valorAnterior === "") return;
 
-  if(operador==="+"){
-    imprimirResultado(sumar());
-  } else if(operador==="-"){
-    imprimirResultado(restar());
-    restar();
-  } else if(operador==="*"){
-    imprimirResultado(multiplicar());
-  } else {
-    imprimirResultado(dividir());
+  switch (operador) {
+    case "+":
+      imprimirResultado(sumar());
+      break;
+    case "-":
+      imprimirResultado(restar());
+      break;
+    case "*":
+      imprimirResultado(multiplicar());
+      break;
+    default:
+      imprimirResultado(dividir());
+      break;
   }
+
+  // if (operador === "+") {
+  //   imprimirResultado(sumar());
+  // } else if (operador === "-") {
+  //   imprimirResultado(restar());
+  //   restar();
+  // } else if (operador === "*") {
+  //   imprimirResultado(multiplicar());
+  // } else {
+  //   imprimirResultado(dividir());
+  // }
 
   inicializarValores();
 
@@ -105,7 +136,7 @@ function imprimirResultado(resultado) {
   displayValorActual.textContent = resultado;
 }
 
-function inicializarValores(){
+function inicializarValores() {
   valorActual = "";
   valorAnterior = "";
   operador = "";
